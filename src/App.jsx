@@ -6,6 +6,8 @@ import './App.css';
 
 const App = () => {
   const [mode, setMode] = useState('normal');
+	const [wins, setWins] = useState(0);
+	const [losses, setLosses] = useState(0);
 
   const variants = {
     leftOpened: {
@@ -47,17 +49,25 @@ const App = () => {
       }
     },
     hide: {
-      scale: 0, opacity: 0,
+      scale: 0.5, opacity: 0,
       transition: {
         type: "spring", bounce: 0.5,duration: 1
       }
     }
   };
 
+	const setResult = (isWon) => {
+		if (isWon) {
+			setWins(prev => prev++);
+		} else {
+			setLosses(prev => prev++);
+		}
+	}
+
   return (
     <div className='app'>
-		  <Menu variants={variants} mode={mode}/>
-			<Arena variants={variants} mode={mode}/>
+		  <Menu variants={variants} mode={mode} wins={wins} losses={losses}/>
+			<Arena variants={variants} mode={mode} setResult={setResult}/>
 			<Rules variants={variants} mode={mode}/>
     </div>
   );

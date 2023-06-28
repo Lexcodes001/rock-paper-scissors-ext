@@ -19,7 +19,7 @@ const Menu = (props) => {
       } 
         className="score-box">
 				<motion.p>SCORE</motion.p>
-				<motion.div className="score">12</motion.div>
+				<motion.div className="score">{props.wins - props.losses}</motion.div>
 			</motion.div>
 
 			<motion.div 
@@ -32,11 +32,11 @@ const Menu = (props) => {
           src={closeIcon} alt="." />
 				<motion.div className="score-stats">
 					<p>Wins:</p>
-          <motion.span className="score">12</motion.span>
+          <motion.span className="score">{props.wins}</motion.span>
 				</motion.div>
         <motion.div className="score-stats">
 					<p>Losses:</p>
-          <motion.span className="score">12</motion.span>
+          <motion.span className="score">{props.losses}</motion.span>
 				</motion.div>
 			</motion.div>
     </motion.div>

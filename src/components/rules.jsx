@@ -10,6 +10,7 @@ const Rules = (props) => {
 	return (
 		<motion.div className='rule-box'>
 		  <motion.button
+        animate={{ x: "-50%" }}
         whileTap={{ scale: 0.7 }}
 			  onClick={() => setDispState(prevstate => !prevstate)}>
         RULES

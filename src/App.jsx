@@ -5,9 +5,9 @@ import Rules from './components/rules.jsx';
 import './App.css';
 
 const App = () => {
-  const [mode, setMode] = useState('normal');
-	const [wins, setWins] = useState(0);
-	const [losses, setLosses] = useState(0);
+  const [mode, setMode] = useState(localStorage.getItem('mode') || 'normal');
+	const [wins, setWins] = useState(Number(localStorage.getItem('wins')) || 0);
+	const [losses, setLosses] = useState(Number(localStorage.getItem('losses')) || 0);
 
   const variants = {
     leftOpened: {
@@ -56,17 +56,31 @@ const App = () => {
     }
   };
 
+  const setGameMode = (mode) => {
+    if (mode === 'normal') {
+      localStorage.setItem('mode', 'adv')
+    } else {
+      localStorage.setItem('mode', 'normal')
+    }
+    alert(mode);
+    setMode(localStorage.getItem('mode'));
+  }
+
 	const setResult = (isWon) => {
+    let userWins = wins;
+    let userLosses = losses;
 		if (isWon) {
-			setWins(prev => prev++);
+      localStorage.setItem('wins', userWins + 1);
+			setWins(Number(localStorage.getItem('wins')));
 		} else {
-			setLosses(prev => prev++);
+      localStorage.setItem('losses', userLosses + 1);
+			setLosses(Number(localStorage.getItem('losses')));
 		}
 	}
 
   return (
     <div className='app'>
-		  <Menu variants={variants} mode={mode} wins={wins} losses={losses}/>
+		  <Menu variants={variants} mode={mode} wins={wins} losses={losses} setGameMode={setGameMode}/>
 			<Arena variants={variants} mode={mode} setResult={setResult}/>
 			<Rules variants={variants} mode={mode}/>
     </div>

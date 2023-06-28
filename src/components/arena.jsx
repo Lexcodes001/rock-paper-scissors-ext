@@ -54,24 +54,35 @@ const Arena = (props) => {
 		let botOptions = normalOptions.filter(option => option.class !== chosenOption.class);
 		let randomIndex = Math.floor(Math.random() * botOptions.length);
 		let randomTime = Math.floor(Math.random() * 10000);
-		setBotOption(botOptions[randomIndex]);
-
-		if (chosenOption.beatenBy === botOption.class) {
-			setIsWon(false);
-			props.setResult(false);
-		} else {
-			setIsWon(true);
-			props.setResult(true);
-		}
-
+    let botChoice = botOptions[randomIndex];
+		setBotOption(botChoice);
+    console.log(chosenOption.beatenBy);
+    console.log(botChoice.class);
+    
 		setTimeout(() => {
-			setFinalState(true)
+      if (chosenOption.beatenBy === botChoice.class) {
+        setIsWon(false);
+        props.setResult(false);
+      } else {
+        setIsWon(true);
+        props.setResult(true);
+      }
+			setFinalState(true);
 		}, randomTime);
 	};
 
+  const resetGame = () => {
+    setInitialState(true);
+    setActionState(false);
+    setFinalState(false);
+    setUserOption(null);
+    setBotOption(null);
+    setIsWon(null);
+  }
+
 	return (
 		<motion.div className='arena'>
-      <AnimatePresence mode='popLayout'>
+      <AnimatePresence>
         { initialState ?
           <motion.div 
 					variants={variants}
@@ -80,7 +91,8 @@ const Arena = (props) => {
 					exit="hide"
 					className="initial"
 					>
-					  {normalOptions.map(option => (
+					  { props.mode === 'normal' ?
+            normalOptions.map(option => (
 							<Option 
 								initialState={initialState}
 								actionState={actionState}
@@ -88,8 +100,11 @@ const Arena = (props) => {
 								callFn={true}
 								dispResult={dispResult}
 								class={option.class} 
-								image={option.image} />
-						))}
+								image={option.image} 
+                beatenBy={option.beatenBy}
+                key={option.class +  Math.floor(Math.random() * normalOptions.length)}/>
+						)) : null
+          }
           </motion.div> : null
         }
 
@@ -109,13 +124,14 @@ const Arena = (props) => {
 							actionState={actionState}
 							finalState={finalState}
 							callFn={false}/>
-							<p>YOU PICKED</p>
+							<p className='picked'>YOU PICKED</p>
 						{ finalState &&
 						  <>
               <div className="wave one"></div>
 							<div className="wave two"></div>
 							<div className="wave three"></div>
 							<div className="wave four"></div>
+              <div className="wave five"></div>
 							</>
             }
 						</motion.div>
@@ -130,7 +146,7 @@ const Arena = (props) => {
 								actionState={actionState}
 							  finalState={finalState}
 							  callFn={false}/>
-								<p>GAME BOT PICKED</p>
+								<p className='picked'>GAME BOT PICKED</p>
 							</> :
 							<>
 								<div className="loading"></div>
@@ -139,14 +155,15 @@ const Arena = (props) => {
 							}
 						</motion.div>
 
-						{ finalState &&
-							<motion.div className='afterplay'>
-								<div className="result">
-									YOU <span className={isWon ? 'win' : 'lose'}>{ isWon ? 'WIN' : "LOSE" }</span>
-								</div>
-								<button className="reset">PLAY AGAIN</button>
-							</motion.div>
-						}
+          </motion.div>
+        }
+        
+        { finalState &&
+          <motion.div className='afterplay'>
+            <div className="result">
+              YOU <span className={isWon ? 'win' : 'lose'}>{ isWon ? 'WIN' : "LOSE" }</span>
+            </div>
+            <button onClick={resetGame}>PLAY AGAIN</button>
           </motion.div>
         }
       </AnimatePresence>

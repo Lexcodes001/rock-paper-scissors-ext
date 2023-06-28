@@ -9,7 +9,11 @@ const Menu = (props) => {
 
   return ( 
     <motion.div className="menu">
-			<motion.img className='logo' src={Logo} alt="." />
+			<motion.img 
+        onClick={() => props.setGameMode()}
+        className='logo' 
+        src={Logo} 
+        alt="." />
 
 			<motion.div 
         onClick={

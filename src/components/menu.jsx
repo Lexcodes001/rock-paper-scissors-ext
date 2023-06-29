@@ -21,8 +21,8 @@ const Menu = (props) => {
 			setTimeout(() => {
 				setShowLastHint(false);
 				props.setIsIntro(false);
-			}, 6000);
-		}, 6000);
+			}, 3000);
+		}, 3000);
 		props.setIsFirstTime(false);
 			//localStorage.setItem('isFirstTime', false);
 			//props.setIsFirstTime(localStorage.getItem('isFirstTime'));
@@ -32,12 +32,22 @@ const Menu = (props) => {
   return ( 
     <motion.div className={props.isIntro ? 'menu no-event' : 'menu'}>
 			<motion.img 
+        variants={props.variants}
+        initial={false}
+        animate="reveal"
+        exit="hide"
+        whileTap={{ scale: 0.9 }}
         onClick={() => props.setGameMode()}
         className='logo' 
         src={props.mode === 'normal' ? Logo : AdvLogo} 
         alt="." />
 
 			<motion.div 
+        variants={props.variants}
+        initial={false}
+        animate="reveal"
+        exit="hide"
+        whileTap={{ scale: 0.9 }}
         onClick={
           () => {
             setDispStats(prevState => !prevState)
@@ -71,14 +81,24 @@ const Menu = (props) => {
 			</motion.div>
 
 			{showFirstHint &&
-				<div className="hint-one">
+				<motion.div 
+          variants={props.variants}
+					initial="hide"
+					animate="reveal"
+					exit="hide"
+          className="hint-one">
 				  Click this Image to switch to {props.mode === 'normal' ? 'Advanced' : 'Normal'} Mode
-			  </div>
+			  </motion.div>
 			}
 			{showLastHint &&
-				<div className="hint-two">
-				  Click on this score box for more stats
-			  </div>
+				<motion.div 
+          variants={props.variants}
+					initial="hide"
+					animate="reveal"
+					exit="hide"
+          className="hint-two">
+				  Click this score box for more stats
+			  </motion.div>
 			}
     </motion.div>
   );

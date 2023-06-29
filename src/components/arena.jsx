@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Option from './option';
+import Option, { GameOption } from './option';
 import Triangle from '../assets/images/bg-triangle.svg';
 import Pentagon from '../assets/images/bg-pentagon.svg';
 import Paper from '../assets/images/icon-paper.svg';
@@ -132,8 +132,7 @@ const Arena = (props) => {
 
 	return (
 		<motion.div className={props.isIntro ? 'blur no-event arena' : 'arena'}>
-      <AnimatePresence mode='popLayout'>
-        { initialState ?
+        { (initialState && props.mode === 'normal') &&
           <motion.div 
 					variants={variants}
 					initial="hide"
@@ -141,37 +140,46 @@ const Arena = (props) => {
 					exit="hide"
 					className="initial"
 					style={{ backgroundImage: props.mode === 'normal' ? `url(${Triangle})` : `url(${Pentagon})` }}>
-						<AnimatePresence>
-					  { props.mode === 'normal' ?
-            normalOptions.map(option => (
-							<Option 
-								initialState={initialState}
-								actionState={actionState}
-								finalState={finalState}
-								callFn={true}
+            <AnimatePresence>
+					  {
+						normalOptions.map(option => (
+							<GameOption 
+                variants={variants}
 								dispResult={dispResult}
 								class={option.class} 
 								id={option.class}
 								image={option.image} 
                 beatenBy={option.beatenBy}
-                key={option.class +  Math.floor(Math.random() * normalOptions.length)}/>
-						)) : 
+                key={Math.random() * normalOptions.length}/>
+						))
+          }
+          </AnimatePresence>
+          </motion.div>
+        }
+
+        { (initialState && props.mode === 'adv') &&
+          <motion.div 
+					variants={variants}
+					initial="hide"
+					animate="reveal"
+					exit="hide"
+					className="initial"
+					style={{ backgroundImage: props.mode === 'normal' ? `url(${Triangle})` : `url(${Pentagon})` }}>
+            <AnimatePresence>
+					  {
 						advOptions.map(option => (
-							<Option 
-								initialState={initialState}
-								actionState={actionState}
-								finalState={finalState}
-								callFn={true}
+							<GameOption 
+                variants={variants}
 								dispResult={dispResult}
 								class={option.class} 
 								id={option.class + '-adv adv'}
 								image={option.image} 
                 beatenBy={option.beatenBy}
-                key={option.class +  Math.floor(Math.random() * normalOptions.length)}/>
+                key={Math.random() * advOptions.length}/>
 						))
           }
-					</AnimatePresence>
-          </motion.div> : null
+          </AnimatePresence>
+          </motion.div>
         }
 
         {
@@ -184,13 +192,10 @@ const Arena = (props) => {
 					className='action'>
 						<motion.div className="user selected">
 						  <Option 
+              variants={variants}
 							class={userOption.class} 
 							id={userOption.class}
-							image={userOption.image}
-							initialState={initialState}
-							actionState={actionState}
-							finalState={finalState}
-							callFn={false}/>
+							image={userOption.image}/>
 							<p className='picked'>YOU PICKED</p>
 						{ finalState &&
 						  <>
@@ -207,13 +212,10 @@ const Arena = (props) => {
 						  { finalState ?
 							<>
 								<Option 
+                variants={variants}
 								class={botOption.class} 
 								id={botOption.class}
-								image={botOption.image}
-								initialState={initialState}
-								actionState={actionState}
-							  finalState={finalState}
-							  callFn={false}/>
+								image={botOption.image}/>
 								<p className='picked'>GPTBOT PICKED</p>
 							</> :
 							<>
@@ -235,7 +237,6 @@ const Arena = (props) => {
             <button onClick={resetGame}>PLAY AGAIN</button>
           </motion.div>
         }
-      </AnimatePresence>
 		</motion.div>
 	);
 }

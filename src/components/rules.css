@@ -1,13 +1,8 @@
-.rule-box{
-  position: relative;
-  overflow-x: hidden;
-}
-
-.rule-box button{
+.rules-btn{
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
-  bottom: 2rem;
+  bottom: 1.5rem;
   font-size: .8rem;
   font-weight: 700;
   letter-spacing: 3px;
@@ -19,12 +14,26 @@
   transition: all ease .5s;
 }
 
-.rule-box button:hover{
+.rules-btn:hover{
   font-weight: 700;
   color: var(--dark-text);
   outline: none;
   background-color: var(--grey);
 }
+
+.rule-box{
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-x: hidden;
+  transform-origin: bottom;
+  transition: filter 1s ease;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+
 
 .rule-box .rules{
   display: grid;
@@ -32,13 +41,12 @@
   justify-items: center;
   align-items: center;
   gap: 2rem;
-  position: fixed;
+  position: absolute;
   width: 100%;
   height: 100%;
-  left: 0;
-  top: 0;
+  left: 50%;
+  top: 50%;
   transform: translate(-50%, -50%);
-  transform-origin: bottom;
   background-color: #fff;
 }
 
@@ -55,4 +63,50 @@
 
 .rules .rules-icon{
   width: 20rem;
+}
+
+@media only screen and (min-width: 769px) {
+  .rules-btn{
+    bottom: 1.5rem;
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    padding: .5rem 1.5rem;
+  }
+
+  .rule-box{
+    transform-origin: center;
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+
+  .rule-box .rules{
+    width: 400px;
+    height: auto;
+    grid-template-areas: "txt null btn" "img img img";
+    grid-template-rows: 15% 85%;
+    grid-template-columns: auto auto auto;
+    justify-content: space-evenly;
+    align-items: center;
+    align-content: space-evenly;
+    gap: 1.5rem;
+    padding: 2rem .5rem;
+    border-radius: .5rem;
+  }
+  
+  .rules p{
+    color: var(--dark-text);
+    font-size: 1.8rem;
+    font-family: 'Barlow Semi Condensed B';
+    grid-area: txt;
+  }
+  
+  .rules .close-icon{
+    width: fit-content;
+    grid-area: btn;
+  }
+  
+  .rules .rules-icon{
+    width: 20rem;
+    grid-area: img;
+  }
 }

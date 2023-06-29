@@ -5,27 +5,48 @@ import Rock from '../assets/images/icon-rock.svg';
 import Scissors from '../assets/images/icon-scissors.svg';
 import './option.css';
 
-const Option = (props) => {
-	const [initialState, setInitialState] = useState(props.initialState);
-	const [actionState, setActionState] = useState(props.actionState);
-	const [finalState, setFinalState] = useState(props.finalState);
-
+export const GameOption = (props) => {
 	return(
-		<motion.div 
-			className={props.id + ' option'}
-			whileTap={
-				initialState && { scale: 0.8 }
-			}
-			onClick={() => {
-				props.callFn && props.dispResult(props.id, props.class, props.image, props.beatenBy)}}>
-			<motion.div className="image">
-				<motion.img
-          whileHover={{ rotateZ: 360,
-            transition: { type: "spring", bounce: 0.8, duration: 2}}}
-          src={props.image} 
-          alt="." />
-			</motion.div>
-		</motion.div>
+		<>
+      <motion.div 
+        variants={props.variants}
+        initial={false}
+        animate="reveal"
+        exit="hide"
+        className={props.id + ' option'}
+        whileTap={{ scale: 0.8 }}
+        onClick={() => {
+          props.dispResult(props.id, props.class, props.image, props.beatenBy)}}>
+        <motion.div className="image">
+          <motion.img
+            whileHover={{ rotateZ: 360,
+              transition: { type: "spring", bounce: 0.8, duration: 2}}}
+            src={props.image} 
+            alt="." />
+        </motion.div>
+      </motion.div>
+    </>
+	);
+}
+
+const Option = (props) => {
+	return(
+		<>
+      <motion.div 
+        variants={props.variants}
+        initial="hide"
+        animate="reveal"
+        exit="hide"
+        className={props.id + ' option'}>
+        <motion.div className="image">
+          <motion.img
+            whileHover={{ rotateZ: 360,
+              transition: { type: "spring", bounce: 0.8, duration: 2}}}
+            src={props.image} 
+            alt="." />
+        </motion.div>
+      </motion.div>
+    </>
 	);
 }
 

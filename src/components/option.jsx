@@ -12,10 +12,12 @@ const Option = (props) => {
 
 	return(
 		<motion.div 
-			className={props.class + ' option'}
-			whileTap={initialState && { scale: 0.8 }}
+			className={props.id + ' option'}
+			whileTap={
+				initialState && { scale: 0.8 }
+			}
 			onClick={() => {
-				props.callFn && props.dispResult(props.class, props.image, props.beatenBy)}}>
+				props.callFn && props.dispResult(props.id, props.class, props.image, props.beatenBy)}}>
 			<motion.div className="image">
 				<motion.img
           whileHover={{ rotateZ: 360,

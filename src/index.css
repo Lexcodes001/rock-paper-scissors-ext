@@ -17,10 +17,11 @@
   -webkit-text-size-adjust: 100%;
 
   --grey: #dedede;
-  --scissors-gradient: linear-gradient(to bottom, hsl(39, 89%, 49%), hsl(40, 84%, 53%));
-  --paper-gradient: linear-gradient(to bottom, hsl(230, 89%, 62%), hsl(230, 89%, 65%));
-  --rock-gradient: linear-gradient(to bottom, hsl(349, 71%, 52%), hsl(349, 70%, 56%));
-  --cyan: linear-gradient(to bottom, hsl(189, 59%, 53%), hsl(189, 58%, 57%));
+  --scissors-gradient: linear-gradient(to bottom, hsl(40, 84%, 53%), hsl(39, 89%, 40%));
+  --paper-gradient: linear-gradient(to bottom, hsl(230, 89%, 65%), hsl(230, 89%, 60%));
+  --rock-gradient: linear-gradient(to bottom, hsl(349, 70%, 60%), hsl(349, 71%, 50%));
+	--lizard-gradient: linear-gradient(to bottom, #8960e2, #6331c7);
+  --cyan: linear-gradient(to bottom, hsl(189, 58%, 53%), hsl(189, 59%, 57%));
   --green-gradient: linear-gradient(to bottom, #8effb7, #1f7c30);
   --dark-text: hsl(229, 25%, 31%);
   --score-text: hsl(229, 64%, 46%);
@@ -46,4 +47,12 @@ button {
   outline: none;
   background: none;
   cursor: pointer;
+}
+
+.blur{
+	filter: blur(3px);
+}
+
+.no-event{
+	pointer-events: none;
 }

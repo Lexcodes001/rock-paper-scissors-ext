@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Option from './option';
+import Triangle from '../assets/images/bg-triangle.svg';
+import Pentagon from '../assets/images/bg-pentagon.svg';
 import Paper from '../assets/images/icon-paper.svg';
 import Rock from '../assets/images/icon-rock.svg';
 import Scissors from '../assets/images/icon-scissors.svg';
+import Spock from '../assets/images/icon-spock.svg';
+import Lizard from '../assets/images/icon-lizard.svg';
 import './arena.css';
 
 const Arena = (props) => {
@@ -17,19 +21,55 @@ const Arena = (props) => {
 	const variants = props.variants;
 	const normalOptions = [
 		{
+			id: 'paper',
 			class: "paper",
 			image: Paper,
-			beatenBy: "scissors"
+			beatenBy: ["scissors"]
 		},
 		{
+			id: 'rock',
 			class: "rock",
 			image: Rock,
-			beatenBy: "paper"
+			beatenBy: ["paper"]
 		},
 		{
+			id: 'scissors',
 			class: "scissors",
 			image: Scissors,
-			beatenBy: "rock"
+			beatenBy: ["rock"]
+		}
+	];
+
+	const advOptions = [
+		{
+			id: 'paper',
+			class: "paper",
+			image: Paper,
+			beatenBy: ["scissors", "lizard"]
+		},
+		{
+			id: 'rock',
+			class: "rock",
+			image: Rock,
+			beatenBy: ["paper", "spock"]
+		},
+		{
+			id: 'scissors',
+			class: "scissors",
+			image: Scissors,
+			beatenBy: ["rock", "spock"]
+		},
+		{
+			id: 'spock',
+			class: "spock",
+			image: Spock,
+			beatenBy: ["lizard", "paper"]
+		},
+		{
+			id: 'lizard',
+			class: "lizard",
+			image: Lizard,
+			beatenBy: ["rock", "scissors"]
 		}
 	];
 
@@ -37,33 +77,43 @@ const Arena = (props) => {
     if (props.mode === 'normal') {
       setOptions(normalOptions);
     } else {
-      setOptions([]);
+      setOptions(advOptions);
     }
-  }, [props.mode]);
 
-	const dispResult = (className, image, beatenBy) => {
+		if (props.reset) {
+			resetGame();
+		}
+  }, [props]);
+
+	const dispResult = (id, className, image, beatenBy) => {
 		const chosenOption = {
+			id: id,
 			class: className,
 			image: image,
-			beatenBy: beatenBy
+			beatenBy: [...beatenBy]
 		};
 
 		setUserOption(chosenOption);
 		setInitialState(false);
 		setActionState(true);
-		let botOptions = normalOptions.filter(option => option.class !== chosenOption.class);
-		let randomIndex = Math.floor(Math.random() * botOptions.length);
-		let randomTime = Math.floor(Math.random() * 10000);
-    let botChoice = botOptions[randomIndex];
+		//let botOptions = [...options].filter(option => option.id !== chosenOption.id);
+		let randomIndex = Math.floor(Math.random() * [...options].length);
+		let randomTime = Math.floor(Math.random() * 3000);
+    let botChoice = options[randomIndex];
 		setBotOption(botChoice);
+		console.log('my choice is', chosenOption);
+		console.log('all options are', options);
+		//console.log('bot options are', botOptions);
     console.log(chosenOption.beatenBy);
-    console.log(botChoice.class);
+    console.log(botChoice.id);
     
 		setTimeout(() => {
-      if (chosenOption.beatenBy === botChoice.class) {
+      if (chosenOption.beatenBy.includes(botChoice.class)) {
         setIsWon(false);
         props.setResult(false);
-      } else {
+      } else if (chosenOption.class === botChoice.class) {
+				props.setResult(null);
+			} else {
         setIsWon(true);
         props.setResult(true);
       }
@@ -81,8 +131,8 @@ const Arena = (props) => {
   }
 
 	return (
-		<motion.div className='arena'>
-      <AnimatePresence>
+		<motion.div className={props.isIntro ? 'blur no-event arena' : 'arena'}>
+      <AnimatePresence mode='popLayout'>
         { initialState ?
           <motion.div 
 					variants={variants}
@@ -90,7 +140,8 @@ const Arena = (props) => {
 					animate="reveal"
 					exit="hide"
 					className="initial"
-					>
+					style={{ backgroundImage: props.mode === 'normal' ? `url(${Triangle})` : `url(${Pentagon})` }}>
+						<AnimatePresence>
 					  { props.mode === 'normal' ?
             normalOptions.map(option => (
 							<Option 
@@ -100,11 +151,26 @@ const Arena = (props) => {
 								callFn={true}
 								dispResult={dispResult}
 								class={option.class} 
+								id={option.class}
 								image={option.image} 
                 beatenBy={option.beatenBy}
                 key={option.class +  Math.floor(Math.random() * normalOptions.length)}/>
-						)) : null
+						)) : 
+						advOptions.map(option => (
+							<Option 
+								initialState={initialState}
+								actionState={actionState}
+								finalState={finalState}
+								callFn={true}
+								dispResult={dispResult}
+								class={option.class} 
+								id={option.class + '-adv adv'}
+								image={option.image} 
+                beatenBy={option.beatenBy}
+                key={option.class +  Math.floor(Math.random() * normalOptions.length)}/>
+						))
           }
+					</AnimatePresence>
           </motion.div> : null
         }
 
@@ -119,6 +185,7 @@ const Arena = (props) => {
 						<motion.div className="user selected">
 						  <Option 
 							class={userOption.class} 
+							id={userOption.class}
 							image={userOption.image}
 							initialState={initialState}
 							actionState={actionState}
@@ -141,12 +208,13 @@ const Arena = (props) => {
 							<>
 								<Option 
 								class={botOption.class} 
+								id={botOption.class}
 								image={botOption.image}
 								initialState={initialState}
 								actionState={actionState}
 							  finalState={finalState}
 							  callFn={false}/>
-								<p className='picked'>GAME BOT PICKED</p>
+								<p className='picked'>GPTBOT PICKED</p>
 							</> :
 							<>
 								<div className="loading"></div>
@@ -160,9 +228,10 @@ const Arena = (props) => {
         
         { finalState &&
           <motion.div className='afterplay'>
-            <div className="result">
-              YOU <span className={isWon ? 'win' : 'lose'}>{ isWon ? 'WIN' : "LOSE" }</span>
-            </div>
+              { isWon !== null ?
+							  <div className="result">YOU <span className={isWon ? 'win' : 'lose'}>{isWon ? 'WIN' : "LOSE"}</span></div> :
+								<div className="result">IT'S A <span className="draw">DRAW</span></div>
+							}
             <button onClick={resetGame}>PLAY AGAIN</button>
           </motion.div>
         }

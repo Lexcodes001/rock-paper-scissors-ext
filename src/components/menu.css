@@ -11,15 +11,16 @@
 }
 
 .menu .logo{
-  width: 5.5rem;
-  margin-left: .5rem;
+  width: auto;
+	height: 3.3rem;
+  margin-left: .6rem;
 }
 
 .menu .score-box{
   cursor: pointer;
-  padding: 3px;
+  padding: 9px 3px;
   width: 4.8rem;
-  height: 4rem;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -46,7 +47,7 @@
   z-index: 5;
   position: absolute;
   right: .6rem;
-  bottom: -7rem;
+  bottom: -10rem;
   padding: 3px;
   width: 4.8rem;
   height: auto;
@@ -77,4 +78,50 @@
 
 .score-stats .score{
   font-size: 1.5rem;
+}
+
+.hint-one {
+	width: fit-content;
+	font-size: .8rem;
+	padding: .5rem .5rem;
+	color: var(--grey);
+	position: absolute;
+	bottom: -1.5rem;
+	left: 1.3rem;
+	border-radius: 0 .5rem .5rem 0;
+	z-index: 6;
+	background-image: var(--paper-gradient);
+}
+
+.hint-one::after {
+	content: "";
+	position: absolute;
+	bottom: 99%;
+	left: .6rem;
+	border-width: .5rem;
+	border-style: solid;
+	border-color: transparent transparent hsl(230, 89%, 65%) transparent;
+}
+
+.hint-two {
+	width: fit-content;
+	font-size: .8rem;
+	padding: .5rem .5rem;
+	color: var(--grey);
+	position: absolute;
+	bottom: -2rem;
+	right: .6rem;
+	border-radius: .5rem 0 0 .5rem;
+	z-index: 6;
+	background-image: var(--paper-gradient);
+}
+
+.hint-two::after {
+	content: "";
+	position: absolute;
+	bottom: 99%;
+	right: 2rem;
+	border-width: .5rem;
+	border-style: solid;
+	border-color: transparent transparent hsl(230, 89%, 65%) transparent;
 }

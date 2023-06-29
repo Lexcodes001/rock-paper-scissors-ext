@@ -6,8 +6,13 @@ import './App.css';
 
 const App = () => {
   const [mode, setMode] = useState(localStorage.getItem('mode') || 'normal');
+	const [isFirstTime, setIsFirstTime] = useState(true);
+	const [isIntro, setIsIntro] = useState(true);
 	const [wins, setWins] = useState(Number(localStorage.getItem('wins')) || 0);
+	const [draws, setDraws] = useState(Number(localStorage.getItem('draws')) || 0);
 	const [losses, setLosses] = useState(Number(localStorage.getItem('losses')) || 0);
+	const [isReset, setIsReset] = useState(false);
+
 
   const variants = {
     leftOpened: {
@@ -56,22 +61,30 @@ const App = () => {
     }
   };
 
-  const setGameMode = (mode) => {
+  const setGameMode = () => {
     if (mode === 'normal') {
+			setIsReset(true);
       localStorage.setItem('mode', 'adv')
     } else {
+			setIsReset(true);
       localStorage.setItem('mode', 'normal')
     }
-    alert(mode);
+		setTimeout(() => {
+			setIsReset(false);
+		}, 2000);
     setMode(localStorage.getItem('mode'));
   }
 
 	const setResult = (isWon) => {
     let userWins = wins;
     let userLosses = losses;
+		let userDraws = draws;
 		if (isWon) {
       localStorage.setItem('wins', userWins + 1);
 			setWins(Number(localStorage.getItem('wins')));
+		} else if (isWon === null){
+      localStorage.setItem('draws', userDraws + 1);
+			setDraws(Number(localStorage.getItem('draws')));
 		} else {
       localStorage.setItem('losses', userLosses + 1);
 			setLosses(Number(localStorage.getItem('losses')));
@@ -80,9 +93,9 @@ const App = () => {
 
   return (
     <div className='app'>
-		  <Menu variants={variants} mode={mode} wins={wins} losses={losses} setGameMode={setGameMode}/>
-			<Arena variants={variants} mode={mode} setResult={setResult}/>
-			<Rules variants={variants} mode={mode}/>
+		  <Menu variants={variants} mode={mode} wins={wins} losses={losses} draws={draws} setGameMode={setGameMode} isIntro={isIntro} setIsIntro={(arg)=>setIsIntro(arg)} isFirstTime={isFirstTime} setIsFirstTime={(arg)=>setIsFirstTime(arg)} />
+			<Arena variants={variants} mode={mode} setResult={setResult} reset={isReset} isIntro={isIntro}/>
+			<Rules variants={variants} mode={mode} isIntro={isIntro}/>
     </div>
   );
 }

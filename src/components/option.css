@@ -4,28 +4,58 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 10rem;
-  height: 10rem;
+  width: 8rem;
+  height: 8rem;
   border-radius: 50%;
   box-shadow: 1px -7px 2px rgba(0, 0, 0, .2) inset;
 }
 
 .paper{
-  top: -2.3rem;
-  left: -1.9rem;
+  top: -1.5rem;
+  left: -1rem;
   background-image: var(--paper-gradient);
 }
 
 .rock{
-  bottom: 1.5rem;
-  left: 28%;
+  bottom: 1rem;
+  left: 32%;
   background-image: var(--rock-gradient);
 }
 
 .scissors{
-  top: -2.3rem;
-  right: -1.9rem;
+  top: -1.5rem;
+  right: -1rem;
   background-image: var(--scissors-gradient);
+}
+
+.paper-adv{
+	top: 5.3rem;
+	right: -1.8rem;
+	background-image: var(--paper-gradient);
+}
+
+.rock-adv{
+	bottom: -2rem;
+	right: 1.2rem;
+	background-image: var(--rock-gradient);
+}
+
+.scissors-adv{
+	top: -2rem;
+	left: 7.5rem;
+	background-image: var(--scissors-gradient);
+}
+
+.spock, .spock-adv{
+	top: 5.3rem;
+	left: -1.8rem;
+	background-image: var(--cyan);
+}
+
+.lizard, .lizard-adv{
+	bottom: -2rem;
+	left: 1.2rem;
+	background-image: var(--lizard-gradient);
 }
 
 .option .image{
@@ -41,5 +71,14 @@
 }
 
 .image img{
-  width: 3.5rem;
+  width: 3rem;
+}
+
+.adv, .selected .option{
+	width: 7rem;
+	height: 7rem;
+}
+
+:is(.adv, .selected .option) .image img{
+	width: 2.5rem;
 }

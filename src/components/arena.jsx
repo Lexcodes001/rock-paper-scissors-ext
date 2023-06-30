@@ -98,7 +98,7 @@ const Arena = (props) => {
 		setActionState(true);
 		//let botOptions = [...options].filter(option => option.id !== chosenOption.id);
 		let randomIndex = Math.floor(Math.random() * [...options].length);
-		let randomTime = Math.floor(Math.random() * 3000);
+		let randomTime = Math.floor(Math.random() * 1000);
     let botChoice = options[randomIndex];
 		setBotOption(botChoice);
 		console.log('my choice is', chosenOption);
@@ -190,14 +190,14 @@ const Arena = (props) => {
 					animate="reveal"
 					exit="hide"
 					className='action'>
-						<motion.div className="user selected">
+						<motion.div className={`user selected ${(isWon || (isWon === null)) ? 'rel' : ''}`}>
 						  <Option 
               variants={variants}
 							class={userOption.class} 
 							id={userOption.class}
 							image={userOption.image}/>
 							<p className='picked'>YOU PICKED</p>
-						{ finalState &&
+						{ (finalState && (isWon || isWon === null)) &&
 						  <>
               <div className="wave one"></div>
 							<div className="wave two"></div>
@@ -208,7 +208,7 @@ const Arena = (props) => {
             }
 						</motion.div>
 
-						<motion.div className="bot selected">
+						<motion.div className={`bot selected ${(!isWon || (isWon === null)) ? 'rel' : ''}`}>
 						  { finalState ?
 							<>
 								<Option 
@@ -217,6 +217,15 @@ const Arena = (props) => {
 								id={botOption.class}
 								image={botOption.image}/>
 								<p className='picked'>GPTBOT PICKED</p>
+								{ (finalState && (!isWon || isWon === null)) &&
+						      <>
+                  <div className="wave one"></div>
+							    <div className="wave two"></div>
+							    <div className="wave three"></div>
+							    <div className="wave four"></div>
+                  <div className="wave five"></div>
+							    </>
+                }
 							</> :
 							<>
 								<div className="loading"></div>

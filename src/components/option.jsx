@@ -19,8 +19,6 @@ export const GameOption = (props) => {
           props.dispResult(props.id, props.class, props.image, props.beatenBy)}}>
         <motion.div className="image">
           <motion.img
-            whileHover={{ rotateZ: 360,
-              transition: { type: "spring", bounce: 0.8, duration: 2}}}
             src={props.image} 
             alt="." />
         </motion.div>
@@ -40,8 +38,6 @@ const Option = (props) => {
         className={props.id + ' option'}>
         <motion.div className="image">
           <motion.img
-            whileHover={{ rotateZ: 360,
-              transition: { type: "spring", bounce: 0.8, duration: 2}}}
             src={props.image} 
             alt="." />
         </motion.div>

@@ -37,10 +37,10 @@
 
 .rule-box .rules{
   display: grid;
-  grid-template-rows: auto auto auto;
+  grid-template-rows: auto auto 5rem;
   justify-items: center;
-  align-items: center;
-  gap: 2rem;
+  align-content: center;
+  gap: 9rem;
   position: absolute;
   width: 100%;
   height: 100%;
@@ -54,6 +54,7 @@
   color: var(--dark-text);
   font-size: 1.8rem;
   font-family: 'Barlow Semi Condensed B';
+	grid-row: 1 / 2;
 }
 
 .rules .close-icon{
@@ -63,15 +64,18 @@
 
 .rules .rules-icon{
   width: 20rem;
+	grid-row: 2 / 3;
 }
 
 @media only screen and (min-width: 769px) {
   .rules-btn{
-    bottom: 1.5rem;
+		left: 90%;
+    bottom: 3rem;
     font-size: .8rem;
     font-weight: 700;
     letter-spacing: 3px;
     padding: .5rem 1.5rem;
+		transform: translateX(-10%) scale(1) translateZ(30px);
   }
 
   .rule-box{
@@ -83,13 +87,13 @@
     width: 400px;
     height: auto;
     grid-template-areas: "txt null btn" "img img img";
-    grid-template-rows: 15% 85%;
+    grid-template-rows: 10% 85%;
     grid-template-columns: auto auto auto;
     justify-content: space-evenly;
     align-items: center;
     align-content: space-evenly;
     gap: 1.5rem;
-    padding: 2rem .5rem;
+    padding: 2rem .5rem 3rem;
     border-radius: .5rem;
   }
   

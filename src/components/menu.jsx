@@ -21,8 +21,8 @@ const Menu = (props) => {
 			setTimeout(() => {
 				setShowLastHint(false);
 				props.setIsIntro(false);
-			}, 3000);
-		}, 3000);
+			}, 5000);
+		}, 5000);
 		props.setIsFirstTime(false);
 			//localStorage.setItem('isFirstTime', false);
 			//props.setIsFirstTime(localStorage.getItem('isFirstTime'));

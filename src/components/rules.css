@@ -24,6 +24,7 @@
 .rule-box{
   width: 100vw;
   height: 100vh;
+  z-index: 10;
   position: fixed;
   top: 0;
   left: 0;
@@ -69,8 +70,8 @@
 
 @media only screen and (min-width: 769px) {
   .rules-btn{
-		left: 90%;
-    bottom: 3rem;
+		left: 88%;
+    bottom: 2rem;
     font-size: .8rem;
     font-weight: 700;
     letter-spacing: 3px;

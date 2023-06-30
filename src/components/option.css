@@ -75,7 +75,7 @@
 }
 
 .image img:hover{
-	animation: shake .2s linear forwards;
+	animation: shake .5s linear forwards infinite;
 }
 
 .adv, .selected .option{
@@ -85,18 +85,6 @@
 
 :is(.adv, .selected .option) .image img{
 	width: 2.5rem;
-}
-
-@keyframes shake {
-	0%{
-		transform: rotateZ(0);
-	}
-	50%{
-		transform: rotateZ(30deg);
-	}
-	100%{
-		transform: rotateZ(0);
-	}
 }
 
 @media only screen and (min-width: 769px) {

@@ -155,37 +155,18 @@
 
 @media only screen and (min-width: 769px) {
   .arena{
-    width: 100%;
 		height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 4rem;
     padding-top: 5rem;
-    transition: filter 1.5s ease;
   }
   
   .arena .initial{
-    position: relative;
     width: 23rem;
     height: 23rem;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-  }
-  
-  .initial .option{
-    position: absolute;
   }
   
   .arena .action{
-    width: 100%;
 		height: 100%;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
     gap: 8rem;
   }
   
@@ -193,30 +174,10 @@
     width: 100%;
     display: flex;
     flex-direction: column-reverse;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-  }
-  
-  .selected .picked{
-    height: fit-content;
-    color: var(--grey);
-    font-size: 1rem;
-    font-weight: 900;
-    letter-spacing: .15rem;
-  }
-  
-  .user{
-    position: relative;
   }
   
   .wave{
-    z-index: -1;
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, -50%);
     top: 60%;
-    border-radius: 50%;
   }
   
   .one{
@@ -242,68 +203,32 @@
   .loading{
     width: 10rem;
     height: 10rem;
-    margin: auto;
-    border-radius: 50%;
-    animation: loading-bg 1s ease-in-out infinite alternate forwards;
-  }
-  
-  .loading-txt{
-    font-size: 1rem;
-    font-weight: 900;
-    letter-spacing: .2rem;
-    color: rgba(255, 255, 255, .07);
-    animation: loading-txt 1s ease-in-out 1s infinite alternate forwards;
   }
   
   .arena .afterplay{
     z-index: 2;
     margin-top: -12.5rem;
 		padding-bottom: 9rem;
-    width: max-content;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     gap: .3rem;
   }
   
   .afterplay .result{
-    color: var(--grey);
     font-size: 2.3rem;
-    letter-spacing: .15rem;
-  }
-  
-  .result .win{
-    background: var(--green-gradient);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  
-  .result .lose{
-    background: var(--rock-gradient);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  
-  .result .draw{
-    background: var(--paper-gradient);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
   }
   
   .afterplay button{
     font-size: .7rem;
-    font-weight: 700;
-    letter-spacing: 3px;
     padding: .5rem .8rem;
-    color: var(--dark-text);
-    background-color: var(--grey);
-    border: none;
-    outline: none;
-    border-radius: 5px;
-    transition: all ease .5s;
+  }
+}
+
+@media only screen and (min-width: 924px) {
+  .arena .afterplay{
+    margin-top: -13rem;
+    gap: .4rem;
+  }
+  
+  .afterplay .result{
+    font-size: 3rem;
   }
 }

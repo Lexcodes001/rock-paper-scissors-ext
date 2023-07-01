@@ -96,16 +96,10 @@ const Arena = (props) => {
 		setUserOption(chosenOption);
 		setInitialState(false);
 		setActionState(true);
-		//let botOptions = [...options].filter(option => option.id !== chosenOption.id);
 		let randomIndex = Math.floor(Math.random() * [...options].length);
 		let randomTime = Math.floor(Math.random() * 1000);
     let botChoice = options[randomIndex];
 		setBotOption(botChoice);
-		console.log('my choice is', chosenOption);
-		console.log('all options are', options);
-		//console.log('bot options are', botOptions);
-    console.log(chosenOption.beatenBy);
-    console.log(botChoice.id);
     
 		setTimeout(() => {
       if (chosenOption.beatenBy.includes(botChoice.class)) {

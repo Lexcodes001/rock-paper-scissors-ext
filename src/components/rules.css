@@ -70,7 +70,8 @@
 
 @media only screen and (min-width: 769px) {
   .rules-btn{
-		left: 88%;
+    left: unset;
+		right: -1rem;
     bottom: 2rem;
     font-size: .8rem;
     font-weight: 700;

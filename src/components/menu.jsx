@@ -24,8 +24,6 @@ const Menu = (props) => {
 			}, 5000);
 		}, 5000);
 		props.setIsFirstTime(false);
-			//localStorage.setItem('isFirstTime', false);
-			//props.setIsFirstTime(localStorage.getItem('isFirstTime'));
 		}
 	}, []);
 

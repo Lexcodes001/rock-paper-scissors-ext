@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Option, { GameOption } from './option';
+import Waves from './waves';
 import Triangle from '../assets/images/bg-triangle.svg';
 import Pentagon from '../assets/images/bg-pentagon.svg';
 import Paper from '../assets/images/icon-paper.svg';
@@ -126,120 +127,102 @@ const Arena = (props) => {
 
 	return (
 		<motion.div className={props.isIntro ? 'blur no-event arena' : 'arena'}>
-        { (initialState && props.mode === 'normal') &&
-          <motion.div 
-					variants={variants}
-					initial="hide"
-					animate="reveal"
-					exit="hide"
-					className="initial"
-					style={{ backgroundImage: props.mode === 'normal' ? `url(${Triangle})` : `url(${Pentagon})` }}>
-            <AnimatePresence>
-					  {
-						normalOptions.map(option => (
-							<GameOption 
+      {(initialState && props.mode === 'normal') &&
+        <motion.div 
+          variants={variants}
+          initial="hide"
+          animate="reveal"
+          exit="hide"
+          className="initial"
+          style={{ backgroundImage: props.mode === 'normal' ? `url(${Triangle})` : `url(${Pentagon})` }}>
+          <AnimatePresence>
+            {
+            normalOptions.map(option => (
+              <GameOption 
                 variants={variants}
-								dispResult={dispResult}
-								class={option.class} 
-								id={option.class}
-								image={option.image} 
+                dispResult={dispResult}
+                class={option.class} 
+                id={option.class}
+                image={option.image} 
                 beatenBy={option.beatenBy}
                 key={Math.random() * normalOptions.length}/>
-						))
-          }
+            ))}
           </AnimatePresence>
-          </motion.div>
-        }
+        </motion.div>
+      }
 
-        { (initialState && props.mode === 'adv') &&
-          <motion.div 
-					variants={variants}
-					initial="hide"
-					animate="reveal"
-					exit="hide"
-					className="initial"
-					style={{ backgroundImage: props.mode === 'normal' ? `url(${Triangle})` : `url(${Pentagon})` }}>
-            <AnimatePresence>
-					  {
-						advOptions.map(option => (
-							<GameOption 
-                variants={variants}
-								dispResult={dispResult}
-								class={option.class} 
-								id={option.class + '-adv adv'}
-								image={option.image} 
-                beatenBy={option.beatenBy}
-                key={Math.random() * advOptions.length}/>
-						))
-          }
-          </AnimatePresence>
-          </motion.div>
-        }
-
-        {
-          actionState &&
-          <motion.div 
-					variants={variants}
-					initial="hide"
-					animate="reveal"
-					exit="hide"
-					className='action'>
-						<motion.div className={`user selected ${(isWon || (isWon === null)) ? 'rel' : ''}`}>
-						  <Option 
+      {(initialState && props.mode === 'adv') &&
+        <motion.div 
+          variants={variants}
+          initial="hide"
+          animate="reveal"
+          exit="hide"
+          className="initial"
+          style={{ backgroundImage: props.mode === 'normal' ? `url(${Triangle})` : `url(${Pentagon})` }}>
+          <AnimatePresence>
+					{
+					advOptions.map(option => (
+						<GameOption 
               variants={variants}
-							class={userOption.class} 
-							id={userOption.class}
-							image={userOption.image}/>
-							<p className='picked'>YOU PICKED</p>
-						{ (finalState && (isWon || isWon === null)) &&
-						  <>
-              <div className="wave one"></div>
-							<div className="wave two"></div>
-							<div className="wave three"></div>
-							<div className="wave four"></div>
-              <div className="wave five"></div>
-							</>
-            }
-						</motion.div>
+							dispResult={dispResult}
+							class={option.class} 
+							id={option.class + '-adv adv'}
+							image={option.image} 
+              beatenBy={option.beatenBy}
+              key={Math.random() * advOptions.length}/>
+          ))}
+          </AnimatePresence>
+        </motion.div>
+      }
 
-						<motion.div className={`bot selected ${(!isWon || (isWon === null)) ? 'rel' : ''}`}>
-						  { finalState ?
-							<>
-								<Option 
+      {
+        actionState &&
+        <motion.div 
+          variants={variants}
+          initial="hide"
+          animate="reveal"
+          exit="hide"
+          className='action'>
+					<motion.div className={`user selected ${(isWon || (isWon === null)) ? 'rel' : ''}`}>
+						<Option 
+              variants={variants}
+              class={userOption.class} 
+              id={userOption.class}
+              image={userOption.image}/>
+						<p className='picked'>YOU PICKED</p>
+					  { (finalState && (isWon || isWon === null)) && <Waves /> }
+					</motion.div>
+
+					<motion.div className={`bot selected ${(!isWon || (isWon === null)) ? 'rel' : ''}`}>
+						{ finalState ?
+						<>
+							<Option 
                 variants={variants}
-								class={botOption.class} 
-								id={botOption.class}
-								image={botOption.image}/>
-								<p className='picked'>GPTBOT PICKED</p>
-								{ (finalState && (!isWon || isWon === null)) &&
-						      <>
-                  <div className="wave one"></div>
-							    <div className="wave two"></div>
-							    <div className="wave three"></div>
-							    <div className="wave four"></div>
-                  <div className="wave five"></div>
-							    </>
-                }
-							</> :
-							<>
-								<div className="loading"></div>
-								<p className='loading-txt'>BOT is thinking...</p>
-							</>
-							}
-						</motion.div>
+                class={botOption.class} 
+                id={botOption.class}
+                image={botOption.image}/>
+							<p className='picked'>GPTBOT PICKED</p>
+							{ (finalState && (!isWon || isWon === null)) && <Waves /> }
+						</> :
+						<>
+							<div className="loading"></div>
+							<p className='loading-txt'>BOT is thinking...</p>
+						</>
+						}
+					</motion.div>
 
-          </motion.div>
-        }
+        </motion.div>
+      }
         
-        { finalState &&
-          <motion.div className='afterplay'>
-              { isWon !== null ?
-							  <div className="result">YOU <span className={isWon ? 'win' : 'lose'}>{isWon ? 'WIN' : "LOSE"}</span></div> :
-								<div className="result">IT'S A <span className="draw">DRAW</span></div>
-							}
-            <button onClick={resetGame}>PLAY AGAIN</button>
-          </motion.div>
-        }
+      { finalState &&
+        <motion.div className='afterplay'>
+          { isWon !== null ?
+						<div className="result">YOU <span className={isWon ? 'win' : 'lose'}>{isWon ? 'WIN' : "LOSE"}</span></div> :
+						<div className="result">IT'S A <span className="draw">DRAW</span></div>
+					}
+          <button onClick={resetGame}>PLAY AGAIN</button>
+        </motion.div>
+      }
 		</motion.div>
 	);
 }

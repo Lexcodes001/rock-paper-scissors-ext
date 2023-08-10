@@ -98,7 +98,7 @@ const Arena = (props) => {
 		setInitialState(false);
 		setActionState(true);
 		let randomIndex = Math.floor(Math.random() * [...options].length);
-		let randomTime = Math.floor(Math.random() * 1000);
+		let randomTime = Math.floor(Math.random() * 500);
     let botChoice = options[randomIndex];
 		setBotOption(botChoice);
     
